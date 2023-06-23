@@ -23,4 +23,4 @@ From this directory do the following in a terminal.
 When using the "--enable-preview" parameter to enable virtual threads the following exception is thrown on native image startup:<br>
 java.lang.NoSuchMethodError: java.lang.Thread$Builder$OfVirtual.unstarted(java.lang.Runnable)
 
-The problem is caused by Javalin's ```ReflectiveVirtualThreadBuilder``` [located here](https://github.com/javalin/javalin/blob/master/javalin/src/main/java/io/javalin/util/ConcurrencyUtil.kt#L100).
+It seems the tracing agent fails to correctly pick up a reflective call done by Javalin's ```ReflectiveVirtualThreadBuilder``` [located here](https://github.com/javalin/javalin/blob/master/javalin/src/main/java/io/javalin/util/ConcurrencyUtil.kt#L100).
