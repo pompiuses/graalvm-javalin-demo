@@ -21,6 +21,6 @@ From this directory do the following in a terminal.
 
 #### Problem
 When using the ```--enable-preview``` parameter the following exception is thrown on native image startup:<br>
-java.lang.NoSuchMethodError: java.lang.Thread$Builder$OfVirtual.unstarted(java.lang.Runnable)
+```java.lang.NoSuchMethodError: java.lang.Thread$Builder$OfVirtual.unstarted(java.lang.Runnable)```
 
 It seems the tracing agent fails to correctly pick up a reflective call done by Javalin's ```ReflectiveVirtualThreadBuilder``` [located here](https://github.com/javalin/javalin/blob/master/javalin/src/main/java/io/javalin/util/ConcurrencyUtil.kt#L100).
