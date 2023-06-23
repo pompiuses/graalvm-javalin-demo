@@ -16,7 +16,7 @@ From this directory do the following in a terminal.
 3. Then manually run ```StressTest.java``` e.g. from your IDE to hit all execution paths. Then stop the application.
 4. Build native image <br>
   native-image -jar target/graalvm-demo-1.0-SNAPSHOT-jar-with-dependencies.jar -H:ConfigurationFileDirectories=target/META-INF/native-image -o target/app --no-fallback --enable-preview
-5. Start native image: <br>
+5. Start native image <br>
   ./target/app
 
 #### Problem
