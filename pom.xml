@@ -5,7 +5,6 @@
     <groupId>graalvm-demo</groupId>
     <artifactId>graalvm-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>graalvm-demo</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
