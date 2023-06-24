@@ -13,7 +13,7 @@ From this directory do the following in a terminal.
   ```mvn clean package```
 2. Start application with tracing agent <br>
   ```java -agentlib:native-image-agent=config-output-dir=target/META-INF/native-image --enable-preview -jar target/graalvm-demo-1.0-SNAPSHOT-jar-with-dependencies.jar```
-3. Then manually hit ```http://localhost:7070``` in your browser to trigger all execution paths for the tracing agent to pick up.
+3. Then hit ```http://localhost:7070``` in your browser to trigger all execution paths for the tracing agent to pick up.
 4. Stop the application.
 5. Build native image <br>
   ```native-image -jar target/graalvm-demo-1.0-SNAPSHOT-jar-with-dependencies.jar -H:ConfigurationFileDirectories=target/META-INF/native-image -o target/app --no-fallback --enable-preview```
