@@ -24,7 +24,7 @@ From this directory do the following in a terminal.
 The following exception is thrown on native image startup (full stacktrace below): <br>
 ```Exception in thread "main" java.lang.NoSuchMethodError: java.lang.Thread$Builder$OfVirtual.unstarted(java.lang.Runnable)```
 
-The tracing agent has, seemingly correctly, added the following to ```reflect-config.json```, but to no effect.
+The tracing agent has, seemingly correctly, added the following to ```reflect-config.json```, but to no effect:
 ```
 {
   "name":"java.lang.Thread$Builder$OfVirtual",
