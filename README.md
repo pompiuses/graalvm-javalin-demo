@@ -2,9 +2,9 @@
 
 #### Environment Tested
 
-- JDK: Oracle GraalVM 20.0.1+9.1 (build 20.0.1+9-jvmci-23.0-b12)
+- Version: Oracle GraalVM 20.0.1+9.1 (build 20.0.1+9-jvmci-23.0-b12)
 - OS: MacOS 13.4.1 Ventura
-- Hardware: Apple M1 Max
+- Architecture: Apple M1 Max
 
 #### Build the native image
 
