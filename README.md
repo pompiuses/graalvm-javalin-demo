@@ -22,8 +22,8 @@ From this directory do the following in a terminal.
 
 #### Problem
 The exception below is thrown on native image startup. It seems the tracing agent fails to correctly pick up a reflective call done by Javalin's ```ReflectiveVirtualThreadBuilder``` [located here](https://github.com/javalin/javalin/blob/master/javalin/src/main/java/io/javalin/util/ConcurrencyUtil.kt#L100).
-
-```Exception in thread "main" java.lang.NoSuchMethodError: java.lang.Thread$Builder$OfVirtual.unstarted(java.lang.Runnable)
+```
+Exception in thread "main" java.lang.NoSuchMethodError: java.lang.Thread$Builder$OfVirtual.unstarted(java.lang.Runnable)
 	at org.graalvm.nativeimage.builder/com.oracle.svm.core.methodhandles.Util_java_lang_invoke_MethodHandleNatives.resolve(Target_java_lang_invoke_MethodHandleNatives.java:345)
 	at java.base@20.0.1/java.lang.invoke.MethodHandleNatives.resolve(MethodHandleNatives.java:199)
 	at org.graalvm.nativeimage.builder/com.oracle.svm.core.methodhandles.Util_java_lang_invoke_MethodHandle.invokeInternal(Target_java_lang_invoke_MethodHandle.java:137)
@@ -62,4 +62,5 @@ The exception below is thrown on native image startup. It seems the tracing agen
 	at io.javalin.jetty.JettyServer.start(JettyServer.kt:82)
 	at io.javalin.Javalin.start(Javalin.java:171)
 	at io.javalin.Javalin.start(Javalin.java:148)
-	at demo.App.main(App.java:9)```
+	at demo.App.main(App.java:9)
+```
