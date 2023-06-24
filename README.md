@@ -22,6 +22,15 @@ From this directory do the following in a terminal.
 
 #### Problem
 The exception below is thrown on native image startup. It seems the tracing agent fails to correctly pick up a reflective call done by Javalin's ```ReflectiveVirtualThreadBuilder``` [located here](https://github.com/javalin/javalin/blob/master/javalin/src/main/java/io/javalin/util/ConcurrencyUtil.kt#L100).
+
+The tracing agent adds the following to ```reflect-config.json```, but to no effect.
+```
+{
+  "name":"java.lang.Thread$Builder$OfVirtual",
+  "methods":[{"name":"name","parameterTypes":["java.lang.String"] }, {"name":"unstarted","parameterTypes":["java.lang.Runnable"] }]
+}
+```
+
 ```
 Exception in thread "main" java.lang.NoSuchMethodError: java.lang.Thread$Builder$OfVirtual.unstarted(java.lang.Runnable)
 	at org.graalvm.nativeimage.builder/com.oracle.svm.core.methodhandles.Util_java_lang_invoke_MethodHandleNatives.resolve(Target_java_lang_invoke_MethodHandleNatives.java:345)
