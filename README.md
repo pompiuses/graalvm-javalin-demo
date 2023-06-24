@@ -21,7 +21,7 @@ From this directory do the following in a terminal.
   ```./target/app```
 
 #### Problem
-The following exception is thrown on native image startup (full stacktrace below):
+The following exception is thrown on native image startup (full stacktrace below): <br>
 ```Exception in thread "main" java.lang.NoSuchMethodError: java.lang.Thread$Builder$OfVirtual.unstarted(java.lang.Runnable)```
 
 It seems the tracing agent fails to correctly pick up a reflective call done by Javalin's [ConcurrencyUtil.kt](https://github.com/javalin/javalin/blob/master/javalin/src/main/java/io/javalin/util/ConcurrencyUtil.kt#L100).
