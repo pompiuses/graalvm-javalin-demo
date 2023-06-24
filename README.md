@@ -21,7 +21,45 @@ From this directory do the following in a terminal.
   ```./target/app```
 
 #### Problem
-The following exception is thrown on native image startup: <br>
-```java.lang.NoSuchMethodError: java.lang.Thread$Builder$OfVirtual.unstarted(java.lang.Runnable)```
+The exception below is thrown on native image startup. It seems the tracing agent fails to correctly pick up a reflective call done by Javalin's ```ReflectiveVirtualThreadBuilder``` [located here](https://github.com/javalin/javalin/blob/master/javalin/src/main/java/io/javalin/util/ConcurrencyUtil.kt#L100).
 
-It seems the tracing agent fails to correctly pick up a reflective call done by Javalin's ```ReflectiveVirtualThreadBuilder``` [located here](https://github.com/javalin/javalin/blob/master/javalin/src/main/java/io/javalin/util/ConcurrencyUtil.kt#L100).
+```Exception in thread "main" java.lang.NoSuchMethodError: java.lang.Thread$Builder$OfVirtual.unstarted(java.lang.Runnable)
+	at org.graalvm.nativeimage.builder/com.oracle.svm.core.methodhandles.Util_java_lang_invoke_MethodHandleNatives.resolve(Target_java_lang_invoke_MethodHandleNatives.java:345)
+	at java.base@20.0.1/java.lang.invoke.MethodHandleNatives.resolve(MethodHandleNatives.java:199)
+	at org.graalvm.nativeimage.builder/com.oracle.svm.core.methodhandles.Util_java_lang_invoke_MethodHandle.invokeInternal(Target_java_lang_invoke_MethodHandle.java:137)
+	at java.base@20.0.1/java.lang.invoke.MethodHandle.invokeBasic(MethodHandle.java:76)
+	at org.graalvm.nativeimage.builder/com.oracle.svm.core.methodhandles.MethodHandleIntrinsicImpl.execute(MethodHandleIntrinsicImpl.java:181)
+	at org.graalvm.nativeimage.builder/com.oracle.svm.core.methodhandles.Util_java_lang_invoke_MethodHandle.invokeInternal(Target_java_lang_invoke_MethodHandle.java:142)
+	at java.base@20.0.1/java.lang.invoke.MethodHandle.invokeBasic(MethodHandle.java:76)
+	at java.base@20.0.1/java.lang.invoke.LambdaForm$NamedFunction.invokeWithArguments(LambdaForm.java:96)
+	at java.base@20.0.1/java.lang.invoke.LambdaForm.interpretName(LambdaForm.java:949)
+	at java.base@20.0.1/java.lang.invoke.LambdaForm.interpretWithArguments(LambdaForm.java:926)
+	at java.base@20.0.1/java.lang.invoke.MethodHandle.invokeBasic(MethodHandle.java:82)
+	at java.base@20.0.1/java.lang.invoke.MethodHandle.invokeBasic(MethodHandle.java:0)
+	at java.base@20.0.1/java.lang.invoke.Invokers$Holder.invoke_MT(Invokers$Holder)
+	at io.javalin.util.ReflectiveVirtualThreadBuilder.unstarted(ConcurrencyUtil.kt:117)
+	at io.javalin.util.NamedVirtualThreadFactory.newThread(ConcurrencyUtil.kt:91)
+	at java.base@20.0.1/java.util.concurrent.ThreadPerTaskExecutor.newThread(ThreadPerTaskExecutor.java:219)
+	at java.base@20.0.1/java.util.concurrent.ThreadPerTaskExecutor$ThreadBoundFuture.<init>(ThreadPerTaskExecutor.java:337)
+	at java.base@20.0.1/java.util.concurrent.ThreadPerTaskExecutor.submit(ThreadPerTaskExecutor.java:285)
+	at java.base@20.0.1/java.util.concurrent.ThreadPerTaskExecutor.submit(ThreadPerTaskExecutor.java:293)
+	at io.javalin.util.LoomUtil$LoomThreadPool.execute(ConcurrencyUtil.kt:63)
+	at org.eclipse.jetty.io.SelectorManager.execute(SelectorManager.java:139)
+	at org.eclipse.jetty.io.ManagedSelector.doStart(ManagedSelector.java:119)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:93)
+	at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:171)
+	at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:121)
+	at org.eclipse.jetty.io.SelectorManager.doStart(SelectorManager.java:239)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:93)
+	at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:171)
+	at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:114)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:367)
+	at org.eclipse.jetty.server.AbstractNetworkConnector.doStart(AbstractNetworkConnector.java:75)
+	at org.eclipse.jetty.server.ServerConnector.doStart(ServerConnector.java:228)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:93)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:428)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:93)
+	at io.javalin.jetty.JettyServer.start(JettyServer.kt:82)
+	at io.javalin.Javalin.start(Javalin.java:171)
+	at io.javalin.Javalin.start(Javalin.java:148)
+	at demo.App.main(App.java:9)```
