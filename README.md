@@ -67,7 +67,7 @@ Exception in thread "main" java.lang.NoSuchMethodError: java.lang.Thread$Builder
 
 It seems the tracing agent fails to correctly pick up a reflective call done by Javalin's ```ConcurrencyUtil.kt``` [located here](https://github.com/javalin/javalin/blob/master/javalin/src/main/java/io/javalin/util/ConcurrencyUtil.kt#L100).
 
-The tracing agent has added the following to ```reflect-config.json```, but to no effect.
+The tracing agent has, seemingly correctly, added the following to ```reflect-config.json```, but to no effect.
 ```
 {
   "name":"java.lang.Thread$Builder$OfVirtual",
