@@ -24,8 +24,6 @@ From this directory do the following in a terminal.
 The following exception is thrown on native image startup (full stacktrace below): <br>
 ```Exception in thread "main" java.lang.NoSuchMethodError: java.lang.Thread$Builder$OfVirtual.unstarted(java.lang.Runnable)```
 
-It seems the tracing agent fails to correctly pick up a reflective call done by Javalin's [ConcurrencyUtil.kt](https://github.com/javalin/javalin/blob/master/javalin/src/main/java/io/javalin/util/ConcurrencyUtil.kt#L100).
-
 The tracing agent has, seemingly correctly, added the following to ```reflect-config.json```, but to no effect.
 ```
 {
@@ -33,6 +31,8 @@ The tracing agent has, seemingly correctly, added the following to ```reflect-co
   "methods":[{"name":"name","parameterTypes":["java.lang.String"] }, {"name":"unstarted","parameterTypes":["java.lang.Runnable"] }]
 }
 ```
+
+The reflective call which fail is done by Javalin's [ConcurrencyUtil.kt](https://github.com/javalin/javalin/blob/master/javalin/src/main/java/io/javalin/util/ConcurrencyUtil.kt#L100).
 
 Full stacktrace:
 ```
